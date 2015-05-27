@@ -14,13 +14,14 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "lita", ">= 4.3"
+  spec.add_runtime_dependency "lita", "~> 4.3"
+  spec.add_runtime_dependency "httparty", "~> 0.13", ">= 0.13.5"
 
   spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "pry-byebug"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rack-test"
-  spec.add_development_dependency "rspec", ">= 3.0.0"
-  spec.add_development_dependency "simplecov"
-  spec.add_development_dependency "coveralls"
+  spec.add_development_dependency "pry-byebug", "~> 3.1", ">= 3.1.0"
+  spec.add_development_dependency "rake", "~> 10.4", ">= 10.4.2"
+  spec.add_development_dependency "rack-test", "~> 0.6", ">= 0.6.3"
+  spec.add_development_dependency "rspec", "~> 3.0", ">= 3.0.0"
+  spec.add_development_dependency "simplecov", "~> 0.10", ">= 0.10.0"
+  spec.add_development_dependency "coveralls", "~> 0.8", ">= 0.8.1"
 end
