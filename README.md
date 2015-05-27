@@ -36,14 +36,14 @@ This gem adds several methods for chat routes.
 
 ##### #nightfall(options={})
 > Returns a hash object from #activity
-``` json
+```
 { activityName: raw_data['activityName'],
   activityDescription: raw_data['activityDescription'],
   skulls: skulls }
 ```
 ##### #weekly_strike(options={})
 > Returns a hash object
-``` json
+```
 { activityName: raw_data['activityName'],
   activityDescription: raw_data['activityDescription'],
   skulls: skulls }
@@ -58,14 +58,14 @@ This gem adds several methods for chat routes.
 
 ##### #place(place_hash)
 > Returns a hash object
-``` json
+```
 { place_name: raw_data['placeName'],
   place_desc: raw_data['placeDescription'] }
 ```
 
 ##### #destination(dest_hash)
 > Returns a hash object
-``` json
+```
 { dest_name: raw_data['destinationName'],
   dest_desc: raw_data['destinationDescription'] }
 
