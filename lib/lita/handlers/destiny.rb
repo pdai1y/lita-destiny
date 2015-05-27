@@ -6,7 +6,7 @@ module Lita
       
       DESTINY = DestinyApi.new(config.api_key)
       
-      route(/!+?\b(nightfall)/i, build_activity_message(DESTINY.nightfall), help: { "!nightfall" => "Get this weeks nightfall description and skulls" })
+      route(/!+?\b(nightfall)/i, :build_activity_message(DESTINY.nightfall), help: { "!nightfall" => "Get this weeks nightfall description and skulls" })
       
             
       

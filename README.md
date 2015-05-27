@@ -1,7 +1,7 @@
 # lita-destiny
 
-[![Build Status](https://travis-ci.org/pDaily/lita-destiny.png?branch=master)](https://travis-ci.org/pDaily/lita-destiny)
-[![Coverage Status](https://coveralls.io/repos/pDaily/lita-destiny/badge.png)](https://coveralls.io/r/pDaily/lita-destiny)
+[![Build Status](https://travis-ci.org/PDaily/lita-destiny.svg?branch=master)](https://travis-ci.org/PDaily/lita-destiny)
+[![Coverage Status](https://coveralls.io/repos/PDaily/lita-destiny/badge.svg?branch=master)](https://coveralls.io/r/PDaily/lita-destiny?branch=master)
 
 Lita handler for interacting with the Destiny API
 
