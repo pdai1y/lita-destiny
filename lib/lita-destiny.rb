@@ -4,7 +4,7 @@ Lita.load_locales Dir[File.expand_path(
   File.join("..", "..", "locales", "*.yml"), __FILE__
 )]
 
-require "destiny/destiny_api"
+require "destiny/base_api"
 require "lita/handlers/destiny"
 
 Lita::Handlers::Destiny.template_root File.expand_path(

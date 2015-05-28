@@ -1,10 +1,6 @@
 module Lita
   module Handlers
-    class Destiny < Handler
-      namespace "destiny"
-      # Bring in DestinyAPI module
-      include DestinyAPI
-      
+    class Destiny < Handler    
       # Required configuration attribute
       config :api_key, type: String, required: true do 
         validate do |value|
@@ -12,9 +8,11 @@ module Lita
         end
       end
       
+      # Bring in DestinyAPI module
+      include DestinyAPI
             
       # Set up our client
-      destiny_client = DestinyAPI::Base.new(config.api_key).call
+      #destiny_client = DestinyAPI::Base.new(config.api_key).call
 
       
       route(/^!\w(.*)/i, :nightfall , help: { "!nightfall" => "Get this weeks nightfall description and skulls" })
