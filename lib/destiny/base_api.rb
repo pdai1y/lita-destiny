@@ -72,7 +72,7 @@ module DestinyAPI
     # Arguments:
     #  raw: (boolean)
     # 
-    def nightfall(raw)
+    def nightfall(raw=false)
       nightfall_activity_hash = self.advisors['nightfallActivityHash']
       activity(nightfall_activity_hash, raw)
     end
@@ -88,7 +88,7 @@ module DestinyAPI
     # Arguments:
     #  raw: (boolean)
     # 
-    def weekly_strike(raw)
+    def weekly_strike(raw=false)
       heroic_strike_hashes = self.advisors['heroicStrikeHashes']
       activity(heroic_strike_hashes[0], raw)
     end
