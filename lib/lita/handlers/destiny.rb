@@ -1,20 +1,33 @@
 module Lita
   module Handlers
     class Destiny < Handler
-      include DestinyApi
-      config :api_key
+      namespace "destiny"
+      # Bring in DestinyAPI module
+      include DestinyAPI
       
-      DESTINY = DestinyApi.new(config.api_key)
-      
-      route(/!+?\b(nightfall)/i, :build_activity_message(DESTINY.nightfall), help: { "!nightfall" => "Get this weeks nightfall description and skulls" })
+      # Required configuration attribute
+      config :api_key, type: String, required: true do 
+        validate do |value|
+           "must be 32 characters" unless value.respond_to?(:size) && value.size == 32
+        end
+      end
       
             
+      # Set up our client
+      destiny_client = DestinyAPI::Base.new(config.api_key).call
+
+      
+      route(/^!\w(.*)/i, :nightfall , help: { "!nightfall" => "Get this weeks nightfall description and skulls" })
+      
+            
+      def nightfall(response)
+        build_activity_message(destiny_client.nightfall, response)
+      end
       
       # activity = { activityName: raw_data['activityName'], activityDescription: raw_data['activityDescription'], skulls: skulls }
-      def build_activity_message(activity)
+      def build_activity_message(activity, response)
         activity = activity
-        #response.reply("#{activity["activityName"]}\n #{activityDescription["activityDescription"]}\n #{skulls["skulls"]}")
-        response.reply("Hi!")
+        response.reply("#{activity["activityName"]}\n #{activityDescription["activityDescription"]}\n #{skulls["skulls"]}")
       end
      
     end
