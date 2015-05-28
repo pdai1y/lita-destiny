@@ -10,9 +10,13 @@ module Lita
       
       # Bring in DestinyAPI module
       include DestinyAPI
-            
+      
+      def api_key
+        config.api_key
+      end
+      
       # Set up our client
-      #destiny_client = DestinyAPI::Base.new(config.api_key).call
+      destiny_client = DestinyAPI::Base.new(api_key)
 
       
       route(/^!\w(.*)/i, :nightfall , help: { "!nightfall" => "Get this weeks nightfall description and skulls" })
