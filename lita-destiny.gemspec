@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-destiny"
-  spec.version       = "0.1.1"
+  spec.version       = "0.1.2"
   spec.authors       = ["PDaily"]
   spec.email         = ["pat.irwin4@gmail.com"]
   spec.description   = "Small lita.io handler for interacting with the Destiny API"
@@ -24,4 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0", ">= 3.0.0"
   spec.add_development_dependency "simplecov", "~> 0.10", ">= 0.10.0"
   spec.add_development_dependency "coveralls", "~> 0.8", ">= 0.8.1"
+  spec.add_development_dependency "codeclimate-test-reporter"
 end
