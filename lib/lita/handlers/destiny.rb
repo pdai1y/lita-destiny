@@ -73,8 +73,15 @@ module Lita
       def build_activity_message(activity, response)
         # Set activity
         activity_hash = activity
-        # Send response
-        response.reply("#{activity_hash[:activityName]}\n#{activity_hash[:activityDescription]}\nSkulls: #{activity_hash[:skulls].join(', ')}")
+        # Send response based on adapter
+        case robot.config.robot.adapter
+        when :slack
+          # Send response
+          response.reply("*#{activity_hash[:activityName]}*\n#{activity_hash[:activityDescription]}\n*Skulls:* #{activity_hash[:skulls].join(', ')}")
+        else
+          # Send response
+          response.reply("#{activity_hash[:activityName]}\n#{activity_hash[:activityDescription]}\nSkulls: #{activity_hash[:skulls].join(', ')}")
+        end
       end
 
       # Xur Response Method
@@ -86,13 +93,25 @@ module Lita
         destiny_client = DestinyAPI::Base.new(api_key)
         # Set xur to our clients xur method
         xur = destiny_client.xur
+
+        items = []
+        xur.each do |key, value|
+          value.each do |key, value|
+            item_name = destiny_client.get_manifest_item(6, key[:item_hash])['itemName']
+            item_cost = key[:item_cost]
+            item_cost_name = destiny_client.get_manifest_item(6, key[:item_cost_hash])['itemName']
+            constructed_item = "#{item_name}, #{item_cost} #{item_cost_name}"
+            items << constructed_item
+          end
+        end
+        
         # Check vendorDetails to see if anything is availible.
-        if xur[:vendorDetails].nil?
+        if xur.nil?
           # If nothing, send to chat that he isn't there.
-          response.reply "Xur isn't in the tower right now."
+          response.reply "Xur isn't in game right now."
         else
-          # If something, send to chat what he is selling.
-          response.reply "Xur is selling: "
+           #If something, send to chat what he is selling.
+          response.reply "*Xur is selling:*\n#{items.join("\n")}"
         end
       end
     end

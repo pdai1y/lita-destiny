@@ -10,5 +10,4 @@ describe Lita::Handlers::Destiny, lita_handler: true do
   
   it { is_expected.to route_command("!nightfall").to(:nightfall)}
   
-  
 end

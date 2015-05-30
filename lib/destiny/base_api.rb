@@ -1,5 +1,5 @@
 require 'httparty'
-
+require 'pp'
 # DestinyAPI module wrapper
 module DestinyAPI
   # Base API Class
@@ -13,7 +13,7 @@ module DestinyAPI
     # Auto-parse responses from Bungie as JSON
     format :json
     # Set base uri
-    base_uri 'www.bungie.net/platform/destiny/'
+    base_uri 'www.bungie.net/Platform/Destiny/'
 
 
     # Init the Destiny API with Bungie API stored in ENV variable
@@ -34,7 +34,7 @@ module DestinyAPI
     #   destiny.advisors
     # 
     def advisors
-      raw_data = self.class.get('/advisors', headers: @headers)
+      raw_data = self.class.get('/Advisors', headers: @headers)
       parsed = raw_data.parsed_response['Response']['data']
     end
 
@@ -50,7 +50,7 @@ module DestinyAPI
     #   raw: (Boolean)
     #   
     def activity(activity_hash, raw=false)
-      raw_data = self.class.get("/manifest/activity/#{activity_hash}").parsed_response['Response']['data']['activity']
+      raw_data = self.class.get("/Manifest/Activity/#{activity_hash}").parsed_response['Response']['data']['activity']
       skulls = []
       raw_data['skulls'].each do |skull|
         skulls << skull['displayName']
@@ -98,11 +98,42 @@ module DestinyAPI
     # No known endpoints.
     def arena(options={})
     end
+    
+    def search_destiny_player(player_name, platform_type)
+      raw_data = self.class.get("/SearchDestinyPlayer/#{platform_type}/#{player_name}/").parsed_response['Response']['membershipId']
+    end
+  
+    def get_destiny_account(player_name, platform_type)
+      member_id = self.search_destiny_player(player_name, platform_type)
+      raw_data = self.class.get("/#{platform_type}/Account/#{member_id}/").parsed_response['Response']['data']
+    end
+    
+    def get_manifest_item(type_id, item_id)
+      raw_data = self.class.get("/Manifest/#{type_id}/#{item_id}").parsed_response['Response']['data']['inventoryItem']
+    end
 
     # WIP: Pull xur inventory
-    # http://www.bungie.net/platform/destiny/advisors/xur/?definitions=true
-    def xur
-      raw_data = self.class.get('/advisors/xur/?definitions=true').parsed_response['Response']['definitions']
+    # http://www.bungie.net/platform/destiny/advisors/xur/
+    def xur(raw=false)
+      raw_data = self.class.get('/Advisors/Xur/').parsed_response['Response']['data']
+      vendor_hash = raw_data['vendorHash']
+      sale_items = {}
+      
+      # Hacky? Probs.
+      raw_data['saleItemCategories'].each do |category|
+        items = { category['categoryTitle'] => category['saleItems'].map!{|item| {:item_hash => item['item']['itemHash'], :item_cost => item['costs'][0]['value'], :item_cost_hash => item['costs'][0]['itemHash']} } }
+        sale_items.merge!(items)
+      end
+      
+      if raw
+        raw_data
+      else
+        sale_items
+      end
+    end
+    
+    def vendor(vendor_hash)
+      raw_data = self.class.get("/Manifest/Vendor/#{vendor_hash}").parsed_response['Response']['data']['vendor']['summary']
     end
 
     # Pull the days bounties
@@ -118,7 +149,7 @@ module DestinyAPI
     #  place_hash: (String)
     #  
     def place(place_hash)
-      raw data = self.class.get('/manifest/place/#{place_hash}').parsed_response['Response']['data']['place']
+      raw data = self.class.get('/Manifest/Place/#{place_hash}').parsed_response['Response']['data']['place']
       response = { place_name: raw_data['placeName'], place_desc: raw_data['placeDescription'] }
     end
 
@@ -131,7 +162,7 @@ module DestinyAPI
     #  destination_hash: (String)
     #  
     def destination(destination_hash)
-      raw_data = self.class.get('/manifest/destination/#{destination_hash}').parsed_response['Response']['data']
+      raw_data = self.class.get('/Manifest/Destination/#{destination_hash}').parsed_response['Response']['data']
       response = { dest_name: raw_data['destinationName'], dest_desc: raw_data['destinationDescription'] }
     end
   end

@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-destiny"
-  spec.version       = "0.1.3"
+  spec.version       = "0.1.4"
   spec.authors       = ["PDaily"]
   spec.email         = ["pat.irwin4@gmail.com"]
   spec.description   = "Small lita.io handler for interacting with the Destiny API"
