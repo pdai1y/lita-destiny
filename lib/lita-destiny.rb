@@ -1,4 +1,5 @@
 require "lita"
+require "destiny_rb"
 
 # Bring in locales from '/locales/*.yml'
 Lita.load_locales Dir[File.expand_path(
