@@ -6,7 +6,6 @@ Lita.load_locales Dir[File.expand_path(
 )]
 
 # Require core files
-require "destiny/base_api"
 require "lita/handlers/destiny"
 
 # Require response templates
