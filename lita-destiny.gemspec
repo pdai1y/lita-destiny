@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-destiny"
-  spec.version       = "0.2.0"
+  spec.version       = "0.3.0"
   spec.authors       = ["PDaily"]
   spec.email         = ["pat.irwin4@gmail.com"]
   spec.description   = "Small lita.io handler for interacting with the Destiny API"
@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "lita", "~> 4.3"
-  spec.add_runtime_dependency "destiny_rb", "~> 0.1"
+  spec.add_runtime_dependency "destiny_rb", "~> 0.1" , ">= 0.1.2"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "pry-byebug", "~> 3.1", ">= 3.1.0"

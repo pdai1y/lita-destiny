@@ -1,6 +1,6 @@
 module Lita
   module Handlers
-    class Destiny < Handler 
+    class DestinyHandler < Handler
       # Required configuration attribute
       config :api_key, type: String, required: true do
         # Do validation against provided api_key, MUST be 32 chars.
@@ -9,67 +9,67 @@ module Lita
            "must be 32 characters" unless value.respond_to?(:size) && value.size == 32
         end
       end
-      
-      # Bring in DestinyAPI module
-      include DestinyAPI
+
+      # Bring in Destiny module
+      include Destiny
 
       # Nightfall Route
       route(/^!(nightfall)/i, :nightfall , help: { "!nightfall" => "Get this weeks nightfall description and skulls" })
-      
+
       # Weekly Strike Route
       route(/^!(weekly)/i, :weekly , help: { "!weekly" => "Get this weeks nightfall description and skulls" })
-      
+
       # Xur Route
       route(/^!(xur)/i, :xur , help: { "!xur" => "Get Xur's inventory when availible" })
-      
+
       # Nightfall Activity Method
-      # 
+      #
       # Calls #build_activity_message(activity)
       # where activity would be nightfall.
-      #     
+      #
       def nightfall(response)
         # Set up our client
-        destiny_client = DestinyAPI::Base.new(api_key)
+        destiny_client = Destiny::Client.new(api_key)
         # Build the activity message with nightfall info
         build_activity_message(destiny_client.nightfall, response)
       end
-      
+
       # Weekly Strike Activity Method
-      # 
+      #
       # Calls #build_activity_message(activity)
       # where activity would be the weekly strike.
-      #      
+      #
       def weekly(response)
         # Set up our client
-        destiny_client = DestinyAPI::Base.new(api_key)
+        destiny_client = Destiny::Client.new(api_key)
         # Build the activity message with weekly info
         build_activity_message(destiny_client.weekly_strike, response)
       end
-      
+
       # Xur Items Method
-      # 
+      #
       # Calls #build_xur_message()
-      # Returns Xur inventory when availible.  
-      # 
+      # Returns Xur inventory when availible.
+      #
       def xur(response)
         build_xur_message(response)
       end
-      
+
       # Begin private methods
-      # 
+      #
       private
-      
+
       # Set our api_key for calling in route methods.
-      # 
+      #
       def api_key
         config.api_key
       end
-      
+
       # Generalized Response Method
-      # 
+      #
       # Used by activity methods to bring concise activity info
       # into the chat.
-      # 
+      #
       def build_activity_message(activity, response)
         # Set activity
         activity_hash = activity
@@ -85,12 +85,12 @@ module Lita
       end
 
       # Xur Response Method
-      # 
+      #
       # Builds response to bring Xur items into chat.
-      # 
+      #
       def build_xur_message(response)
         # Set up our client
-        destiny_client = DestinyAPI::Base.new(api_key)
+        destiny_client = Destiny::Client.new(api_key)
         # Set xur to our clients xur method
         xur = destiny_client.xur
 
@@ -104,7 +104,7 @@ module Lita
             items << constructed_item
           end
         end
-        
+
         # Check vendorDetails to see if anything is availible.
         if xur.nil?
           # If nothing, send to chat that he isn't there.
@@ -115,8 +115,8 @@ module Lita
         end
       end
     end
-    
+
     # Register the handler
-    Lita.register_handler(Destiny)
+    Lita.register_handler(DestinyHandler)
   end
 end
