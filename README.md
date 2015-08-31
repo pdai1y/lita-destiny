@@ -19,9 +19,5 @@ gem "lita-destiny"
 
 Add the config to your lita config file with your Bungie API key:
 ``` ruby
-config.handlers.destiny.api_key = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+config.handlers.destiny_handler.api_key = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 ```
-
-## Usage
-
-This gem adds several methods for chat routes.
