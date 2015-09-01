@@ -229,10 +229,6 @@ module Lita
         # Create Attachment
         attachment = Lita::Adapters::Slack::Attachment.new(text, attachment_options)
         robot.chat_service.send_attachments(response.room, attachment)
-
-
-        response.reply "*Level #{level} Prison of Elders*\n#{arena_name}\n#{arena_description}\n#{parsed_rounds.join("\n")}"
-
       end
     end
 
