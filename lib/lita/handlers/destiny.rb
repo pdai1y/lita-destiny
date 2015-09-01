@@ -22,6 +22,7 @@ module Lita
       # Xur Route
       route(/^!(xur)/i, :xur , help: { "!xur" => "Get Xur's inventory when availible" })
 
+      # PoE Routes
       route(/^!(poe32)/i, :poe_32, help: { "!32" => "Get this weeks level 32 Prison of Elders information." })
 
       route(/^!(poe34)/i, :poe_34, help: { "!34" => "Get this weeks level 34 Prison of Elders information." })
@@ -36,8 +37,12 @@ module Lita
       def nightfall(response)
         # Set up our client
         destiny_client = Destiny::Client.new(api_key)
+        # Set attachment color
+        color = "#d35400"
+        # Set attachment thumb_url
+        thumb_url = "http://i.imgur.com/J9oBqJK.png"
         # Build the activity message with nightfall info
-        build_activity_message(destiny_client.nightfall, response)
+        build_activity_message(destiny_client.nightfall, response, color, thumb_url)
       end
 
       # Weekly Strike Activity Method
@@ -48,8 +53,12 @@ module Lita
       def weekly(response)
         # Set up our client
         destiny_client = Destiny::Client.new(api_key)
+        # Set attachment color
+        color = "#f39c12"
+        # Set attachment thumb_url
+        thumb_url = "http://i.imgur.com/HhXoUCX.png"
         # Build the activity message with weekly info
-        build_activity_message(destiny_client.weekly_strike, response)
+        build_activity_message(destiny_client.weekly_strike, response, color, thumb_url)
       end
 
       # Xur Items Method
@@ -58,7 +67,9 @@ module Lita
       # Returns Xur inventory when availible.
       #
       def xur(response)
-        build_xur_message(response)
+        # Set attachment color
+        color = "#9b59b6"
+        build_xur_message(response, color)
       end
 
       def poe_32(response)
@@ -88,10 +99,34 @@ module Lita
       # Used by activity methods to bring concise activity info
       # into the chat.
       #
-      def build_activity_message(activity, response)
-        # Set activity
-        activity_hash = activity
-        response.reply("*#{activity_hash[:activityName]}*\n#{activity_hash[:activityDescription]}\n*Skulls:* #{activity_hash[:skulls].join(', ')}")
+      def build_activity_message(activity, response, color, thumb_url)
+        skull_fields = []
+        activity[:skulls].each do |skull|
+          skull_hash = {
+            title: skull,
+            value: "",
+            short: true
+          }
+          skull_fields << skull_hash
+        end
+        # Create our attachment structure
+        attachment_options = {
+
+            color: "#d35400",
+
+            title: "#{activity[:activityName]}",
+
+            text: "#{activity[:activityDescription]}",
+
+            fields: skull_fields,
+
+            thumb_url: thumb_url
+        }
+
+        text = "#{activity[:activityDescription]}"
+        # Create Attachment
+        attachment = Lita::Adapters::Slack::Attachment.new(text, attachment_options)
+        robot.chat_service.send_attachments(response.room, attachment)
       end
 
       # Xur Response Method
