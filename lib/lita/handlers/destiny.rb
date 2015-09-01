@@ -134,7 +134,7 @@ module Lita
       # Builds response to bring Xur items into chat.
       #
       # TODO: Is slow due to each item having to be polled from Bungies server.
-      def build_xur_message(response)
+      def build_xur_message(response, color)
         # Set up our client
         destiny_client = Destiny::Client.new(api_key)
         # Set xur to our clients xur method
@@ -186,7 +186,7 @@ module Lita
               parsed_skulls = destiny_client.skulls(skull).capitalize
               skulls << parsed_skulls
             end
-          parsed_round = "Round #{index+1}: #{enemy}-- #{skulls.join(", ")}"
+          parsed_round = "Round #{index+1}: #{enemy}     (#{skulls.join(", ")})"
           parsed_rounds << parsed_round
         end
 
@@ -198,13 +198,40 @@ module Lita
             parsed_skulls = destiny_client.skulls(skull).capitalize
             skulls << parsed_skulls
           end
-          parsed_round  = "Round 6: Skolas-- #{skulls.join(", ")}"
+          parsed_round  = "Round 6: Skolas     (#{skulls.join(", ")})"
           parsed_rounds << parsed_round
         end
 
+        round_fields = []
+        parsed_rounds.each do |round|
+          round_hash = {
+            title: round,
+            value: "",
+            short: false
+          }
+          round_fields << round_hash
+        end
+        # Create our attachment structure
+        attachment_options = {
+
+            color: "#d35400",
+
+            title: "Level #{level} Prison of Elders: #{arena_name}",
+
+            text: "#{arena_description}",
+
+            fields: round_fields,
+
+            thumb_url: "http://i0.wp.com/planetdestiny.com/wp-content/uploads/2015/04/arena-icon.png"
+        }
+
+        text = "#{arena_description}"
+        # Create Attachment
+        attachment = Lita::Adapters::Slack::Attachment.new(text, attachment_options)
+        robot.chat_service.send_attachments(response.room, attachment)
+
+
         response.reply "*Level #{level} Prison of Elders*\n#{arena_name}\n#{arena_description}\n#{parsed_rounds.join("\n")}"
-
-
 
       end
     end
