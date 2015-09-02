@@ -14,20 +14,20 @@ module Lita
       include Destiny
 
       # Nightfall Route
-      route(/^!(nightfall)/i, :nightfall , help: { "!nightfall" => "Get this weeks nightfall description and skulls" })
+      route(/^(nightfall)/i, :nightfall , help: { "!nightfall" => "Get this weeks nightfall description and skulls" })
 
       # Weekly Strike Route
-      route(/^!(weekly)/i, :weekly , help: { "!weekly" => "Get this weeks nightfall description and skulls" })
+      route(/^(weekly)/i, :weekly , help: { "!weekly" => "Get this weeks nightfall description and skulls" })
 
       # Xur Route
-      route(/^!(xur)/i, :xur , help: { "!xur" => "Get Xur's inventory when availible" })
+      route(/^(xur)/i, :xur , help: { "!xur" => "Get Xur's inventory when availible" })
 
       # PoE Routes
-      route(/^!(poe32)/i, :poe_32, help: { "!32" => "Get this weeks level 32 Prison of Elders information." })
+      route(/^(poe32)/i, :poe_32, help: { "!32" => "Get this weeks level 32 Prison of Elders information." })
 
-      route(/^!(poe34)/i, :poe_34, help: { "!34" => "Get this weeks level 34 Prison of Elders information." })
+      route(/^(poe34)/i, :poe_34, help: { "!34" => "Get this weeks level 34 Prison of Elders information." })
 
-      route(/^!(poe35)/i, :poe_35, help: { "!35" => "Get this weeks level 35 Prison of Elders information." })
+      route(/^(poe35)/i, :poe_35, help: { "!35" => "Get this weeks level 35 Prison of Elders information." })
 
       # Nightfall Activity Method
       #

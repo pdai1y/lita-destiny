@@ -21,3 +21,5 @@ Add the config to your lita config file with your Bungie API key:
 ``` ruby
 config.handlers.destiny_handler.api_key = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 ```
+
+I suggest adding ```config.robot.alias = "!"``` to your config file!
