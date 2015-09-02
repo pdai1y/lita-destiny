@@ -102,6 +102,8 @@ module Lita
       def build_activity_message(activity, response, color, thumb_url)
         skull_fields = []
         activity[:skulls].each do |skull|
+          # Remove _ in symbol names
+          skull.to_s.split(/ |\_/).map(&:capitalize).join(" ")
           skull_hash = {
             title: skull,
             value: "",
