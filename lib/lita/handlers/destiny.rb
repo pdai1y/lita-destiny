@@ -125,7 +125,7 @@ module Lita
             thumb_url: thumb_url
         }
 
-        text = "#{activity[:activityDescription]}"
+        text = "#{activity[:specificActivity][:activityDescription]}"
         # Create Attachment
         attachment = Lita::Adapters::Slack::Attachment.new(text, attachment_options)
         robot.chat_service.send_attachments(response.room, attachment)
